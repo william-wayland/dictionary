@@ -32,6 +32,8 @@ int main()
 {
 	auto dictionary = read_file("words.txt");
 
+// using count() and iterating over the set, are there any kets if a count > 1?
+
 	std::string users_word;
 	while (true)
 	{
