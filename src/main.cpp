@@ -2,45 +2,48 @@
 #include <fstream>
 #include <memory>
 #include <unordered_set>
-#include <vector>
 #include <string>
-#include <chrono>
+#include "timer.h"
 
-auto read_file(const std::string& path) {
+auto read_file(const std::string& path)
+{
 	auto file = std::fstream();
 	file.open(path);
-
-	auto file_data = std::vector<std::string>();
-	if (!file.is_open()) {
-		std::cerr << "Couldn't Read File at:" << path << std::endl;
+	if (!file.is_open())
+	{
+		std::cerr << "Couldn't Read File At:" << path << std::endl;
 		std::exit(-1);
 	}
 
-	std::string s;
-	while (!file.eof()) {
+ 	auto file_data = std::unordered_set<std::string>();
+	while (!file.eof())
+	{
+		std::string s;
 		std::getline(file, s);
-		file_data.push_back(s);
+		file_data.emplace(std::move(s));
 	}
 
-	return std::make_unique<std::vector<std::string>>(std::move(file_data));
+	return std::make_unique<std::unordered_set<std::string>>
+		(std::move(file_data));
 }
 
 
-int main() {
+int main()
+{
+	auto dictionary = read_file("words.txt");
 
-	if (auto dictionary = read_file("words.txt")) {
-
-		auto start = std::chrono::high_resolution_clock::now();
-
-		for (const auto& s : *dictionary) {
-			std::cout << s << std::endl;
+	std::string users_word;
+	while (true)
+	{
+		std::cout << "> ";
+		std::getline(std::cin, users_word);
+		if (dictionary->count(users_word) > 0)
+		{
+			std::cout << "That's a word." << "\n";
 		}
-
-		auto end = std::chrono::high_resolution_clock::now();
-		std::chrono::duration<double> elapsed = end - start;
-		std::cout << "Elapsed time: " << elapsed.count() << " s\n";
-	}
-	else {
-
+		else
+		{
+			std::cout << "That's not a word." << "\n";
+		}
 	}
 }
