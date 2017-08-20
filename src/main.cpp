@@ -5,41 +5,64 @@
 #include <string>
 #include "timer.h"
 
-auto read_file(const std::string& path)
+class Dictionary
 {
-	auto file = std::fstream();
-	file.open(path);
-	if (!file.is_open())
+public:
+	Dictionary():
+		has_read_from_file(false)
 	{
-		std::cerr << "Couldn't Read File At:" << path << std::endl;
-		std::exit(-1);
+
+	}
+	Dictionary(const std::string& path_to_file)
+	{
+		read_file(path_to_file);
 	}
 
- 	auto file_data = std::unordered_set<std::string>();
-	while (!file.eof())
+	void read_file(const std::string& path)
 	{
-		std::string s;
-		std::getline(file, s);
-		file_data.emplace(std::move(s));
+		auto file = std::fstream();
+		file.open(path);
+		if (!file.is_open())
+		{
+			std::cerr << "Couldn't Read File At:" << path << std::endl;
+			std::exit(-1);
+		}
+
+		while (!file.eof())
+		{
+			std::string s;
+			std::getline(file, s);
+			words.emplace(std::move(s));
+		}
+		has_read_from_file = true;
 	}
 
-	return std::make_unique<std::unordered_set<std::string>>
-		(std::move(file_data));
-}
+	bool does_contain(const std::string& word)
+	{
+		return words.count(word) > 0;
+	}
 
+	~Dictionary() = default;
+	Dictionary(const Dictionary& other) = default;
+	Dictionary(Dictionary&& other) = default;
+	Dictionary& operator=(const Dictionary& other) = default;
+	Dictionary& operator=(Dictionary&& other) = default;
+
+private:
+	std::unordered_set<std::string> words;
+	bool has_read_from_file;
+};
 
 int main()
 {
-	auto dictionary = read_file("words.txt");
-
-// using count() and iterating over the set, are there any kets if a count > 1?
+	auto dictionary = Dictionary("words.txt");
 
 	std::string users_word;
 	while (true)
 	{
 		std::cout << "> ";
 		std::getline(std::cin, users_word);
-		if (dictionary->count(users_word) > 0)
+		if (dictionary.does_contain(users_word))
 		{
 			std::cout << "That's a word." << "\n";
 		}
