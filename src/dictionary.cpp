@@ -5,11 +5,14 @@ Dictionary::Dictionary():
 {
 }
 
-Dictionary::Dictionary(const std::string& path_to_file)
+Dictionary::Dictionary(
+  const std::string& path_to_file,
+  bool remove_punctuations)
 {
-  add_a_file(path_to_file);
+  add_a_file(path_to_file, remove_punctuations);
 }
 
+//! Searchs the container for a word
 bool Dictionary::does_contain(const std::string& word)
 {
   if (has_read_a_file) {
@@ -20,7 +23,10 @@ bool Dictionary::does_contain(const std::string& word)
   return false;
 }
 
-void Dictionary::add_a_file(const std::string& path)
+//! Reads a file from the path, and adds each word found into the container.
+void Dictionary::add_a_file(
+  const std::string& path,
+  bool remove_punctuations)
 {
   auto file = std::fstream();
   file.open(path);
@@ -30,11 +36,41 @@ void Dictionary::add_a_file(const std::string& path)
     std::exit(-1);
   }
 
-  while (!file.eof())
+  //! Search through the file for words.
+  while (true)
   {
-    std::string s;
-    std::getline(file, s);
-    words.emplace(std::move(s));
+    auto word = std::string();
+    if (file >> word)
+    {
+      if (remove_punctuations) {
+        word.erase(std::remove(word.begin(), word.end(), '.'), word.end());
+        word.erase(std::remove(word.begin(), word.end(), ','), word.end());
+        word.erase(std::remove(word.begin(), word.end(), ';'), word.end());
+        word.erase(std::remove(word.begin(), word.end(), '?'), word.end());
+        word.erase(std::remove(word.begin(), word.end(), '!'), word.end());
+        word.erase(std::remove(word.begin(), word.end(), ':'), word.end());
+        word.erase(std::remove(word.begin(), word.end(), '('), word.end());
+        word.erase(std::remove(word.begin(), word.end(), ')'), word.end());
+      }
+      words.emplace(std::move(word));
+    }
+    else
+    {
+      break;
+    }
   }
+
+  //! Perform a check for each word (there may have been a hash-collision).
+  for (const auto& word: words) {
+		if (!does_contain(word)) {
+			std::cerr << "Missing word " << word << "\n";
+		}
+	}
+
   has_read_a_file = true;
+}
+
+//! Returns a unmutable reference to the dictionary's container
+const std::unordered_set<std::string>& Dictionary::borrow_container() {
+  return words;
 }
