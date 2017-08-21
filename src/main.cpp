@@ -7,17 +7,17 @@ int main()
 	auto dictionary = Dictionary("words.txt");
 	auto users_word = std::string();
 
-
-	do {
+	while(true) {
 		std::cout << "> ";
 		std::getline(std::cin, users_word);
+		if (users_word == ".") break;
 		if (dictionary.does_contain(users_word))
 		{
-			std::cout << "That's a word." << "\n";
+			std::cout << "\"" << users_word << "\" is a word." << "\n\n";
 		}
 		else
 		{
-			std::cout << "That's not a word." << "\n";
+			std::cout << "\"" << users_word << "\" is not a word." << "\n\n";
 		}
-	} while (users_word != ".");
+	}
 }
