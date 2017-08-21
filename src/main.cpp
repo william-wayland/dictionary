@@ -5,8 +5,8 @@
 int main()
 {
 	auto dictionary = Dictionary("words.txt");
+	auto users_word = std::string();
 
-	std::string users_word;
 	while (true)
 	{
 		std::cout << "> ";
