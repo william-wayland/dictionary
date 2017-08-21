@@ -7,9 +7,9 @@ Dictionary::Dictionary():
 
 Dictionary::Dictionary(
   const std::string& path_to_file,
-  Punctuation punct)
+  bool remove_punctuations)
 {
-  add_file(path_to_file, punct);
+  add_a_file(path_to_file, remove_punctuations);
 }
 
 //! Searchs the container for a word
@@ -24,9 +24,9 @@ bool Dictionary::does_contain(const std::string& word)
 }
 
 //! Reads a file from the path, and adds each word found into the container.
-void Dictionary::add_file(
+void Dictionary::add_a_file(
   const std::string& path,
-  Punctuation punct)
+  bool remove_punctuations)
 {
   auto file = std::fstream();
   file.open(path);
@@ -42,7 +42,7 @@ void Dictionary::add_file(
     auto word = std::string();
     if (file >> word)
     {
-      if (punct == Punctuation::Remove) {
+      if (remove_punctuations) {
         word.erase(std::remove(word.begin(), word.end(), '.'), word.end());
         word.erase(std::remove(word.begin(), word.end(), ','), word.end());
         word.erase(std::remove(word.begin(), word.end(), ';'), word.end());
@@ -70,7 +70,7 @@ void Dictionary::add_file(
   has_read_a_file = true;
 }
 
-//! Returns a unmutable reference to the dictionary's container -- safe
+//! Returns a unmutable reference to the dictionary's container
 const std::unordered_set<std::string>& Dictionary::borrow_container() {
   return words;
 }
