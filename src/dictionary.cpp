@@ -42,7 +42,8 @@ void Dictionary::add_file(
     auto word = std::string();
     if (file >> word)
     {
-      if (punct == Punctuation::Remove) {
+      if (punct == Punctuation::Remove)
+      {
         word.erase(std::remove(word.begin(), word.end(), '.'), word.end());
         word.erase(std::remove(word.begin(), word.end(), ','), word.end());
         word.erase(std::remove(word.begin(), word.end(), ';'), word.end());
@@ -59,14 +60,6 @@ void Dictionary::add_file(
       break;
     }
   }
-
-  //! Perform a check for each word (there may have been a hash-collision).
-  for (const auto& word: words) {
-		if (!does_contain(word)) {
-			std::cerr << "Missing word " << word << "\n";
-		}
-	}
-
   has_read_a_file = true;
 }
 
