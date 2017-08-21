@@ -4,8 +4,8 @@
 
 int main()
 {
-	auto dictionary = Dictionary("alice.txt", true);
-	dictionary.add_a_file("words.txt", false);
+	auto dictionary = Dictionary("alice.txt", Punctuation::Remove);
+	dictionary.add_file("words.txt", Punctuation::Keep);
 
 	auto users_word = std::string();
 	while(true) {
