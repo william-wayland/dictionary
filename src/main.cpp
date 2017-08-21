@@ -15,13 +15,18 @@ int main()
 		{
 			break;
 		}
+		else if (users_word == "")
+		{
+			continue;
+		}
+
 		if (dictionary.contains(users_word))
 		{
-			std::cout << "\"" << users_word << "\" is a word." << "\n\n";
+			std::cout << " \"" << users_word << "\" is a word." << "\n\n";
 		}
 		else
 		{
-			std::cout << "\"" << users_word << "\" is not a word." << "\n\n";
+			std::cout << " \"" << users_word << "\" is not a word." << "\n\n";
 		}
 	}
 }
