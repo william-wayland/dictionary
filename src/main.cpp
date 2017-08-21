@@ -7,8 +7,8 @@ int main()
 	auto dictionary = Dictionary("words.txt");
 	auto users_word = std::string();
 
-	while (true)
-	{
+
+	do {
 		std::cout << "> ";
 		std::getline(std::cin, users_word);
 		if (dictionary.does_contain(users_word))
@@ -19,5 +19,5 @@ int main()
 		{
 			std::cout << "That's not a word." << "\n";
 		}
-	}
+	} while (users_word != ".");
 }
