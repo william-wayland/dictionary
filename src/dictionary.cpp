@@ -64,6 +64,6 @@ void Dictionary::add_file(
 }
 
 //! Returns a unmutable reference to the dictionary's container -- safe
-const std::unordered_set<std::string>& Dictionary::borrow_container() {
+const std::unordered_set<std::string>& Dictionary::get_container_ref() {
   return words;
 }

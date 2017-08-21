@@ -21,7 +21,7 @@ public:
     Punctuation punct = Punctuation::Remove);
 
 	bool contains(const std::string& word);
-	const std::unordered_set<std::string>& borrow_container();
+	const std::unordered_set<std::string>& get_container_ref();
 
 
 private:
