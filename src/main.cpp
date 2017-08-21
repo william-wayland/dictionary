@@ -5,6 +5,7 @@
 int main()
 {
 	auto dictionary = Dictionary("alice.txt", true);
+	dictionary.add_a_file("words.txt", false);
 
 	auto users_word = std::string();
 	while(true) {
