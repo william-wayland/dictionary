@@ -20,7 +20,7 @@ public:
     const std::string& path,
     Punctuation punct = Punctuation::Remove);
 
-	bool does_contain(const std::string& word);
+	bool contains(const std::string& word);
 	const std::unordered_set<std::string>& borrow_container();
 
 

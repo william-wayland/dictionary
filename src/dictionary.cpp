@@ -13,7 +13,7 @@ Dictionary::Dictionary(
 }
 
 //! Searchs the container for a word
-bool Dictionary::does_contain(const std::string& word)
+bool Dictionary::contains(const std::string& word)
 {
   if (has_read_a_file) {
     return words.count(word) > 0;

@@ -15,7 +15,7 @@ int main()
 		{
 			break;
 		}
-		if (dictionary.does_contain(users_word))
+		if (dictionary.contains(users_word))
 		{
 			std::cout << "\"" << users_word << "\" is a word." << "\n\n";
 		}
