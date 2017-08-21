@@ -4,8 +4,13 @@
 
 int main()
 {
-	auto dictionary = Dictionary("alice.txt", true);
-	dictionary.add_a_file("words.txt", false);
+	//! We could say true to alice because its a book,
+	//! and as . " ! ? , all though it.
+	auto dictionary = Dictionary("alice.txt", Punctuation::Remove);
+
+	//! We would say false to words because its a clean list
+	//! So we might want "can't" and other words like that
+	dictionary.add_a_file("words.txt", Punctuation::Keep);
 
 	auto users_word = std::string();
 	while(true) {
