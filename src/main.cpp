@@ -4,7 +4,7 @@
 
 int main()
 {
-	auto dictionary = Dictionary("alice.txt", Punctuation::Remove);
+	auto dictionary = Dictionary("alice.txt", Punctuation::CompleteRemoval);
 	dictionary.add_file("words.txt", Punctuation::Keep);
 
 	auto users_word = std::string();

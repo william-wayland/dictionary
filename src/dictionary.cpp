@@ -1,13 +1,15 @@
 #include "dictionary.h"
 
 Dictionary::Dictionary():
-  has_read_a_file(false)
+  has_read_a_file(false),
+  complete("[^A-Za-z]")
 {
 }
 
 Dictionary::Dictionary(
   const std::string& path_to_file,
-  Punctuation punct)
+  Punctuation punct):
+  complete("[^A-Za-z]")
 {
   add_file(path_to_file, punct);
 }
@@ -15,7 +17,8 @@ Dictionary::Dictionary(
 //! Searchs the container for a word
 bool Dictionary::contains(const std::string& word)
 {
-  if (has_read_a_file) {
+  if (has_read_a_file)
+  {
     return words.count(word) > 0;
   }
   std::cerr << "I havn't loaded any words into the dictionary." << '\n';
@@ -42,16 +45,9 @@ void Dictionary::add_file(
     auto word = std::string();
     if (file >> word)
     {
-      if (punct == Punctuation::Remove)
+      if (punct == Punctuation::CompleteRemoval)
       {
-        word.erase(std::remove(word.begin(), word.end(), '.'), word.end());
-        word.erase(std::remove(word.begin(), word.end(), ','), word.end());
-        word.erase(std::remove(word.begin(), word.end(), ';'), word.end());
-        word.erase(std::remove(word.begin(), word.end(), '?'), word.end());
-        word.erase(std::remove(word.begin(), word.end(), '!'), word.end());
-        word.erase(std::remove(word.begin(), word.end(), ':'), word.end());
-        word.erase(std::remove(word.begin(), word.end(), '('), word.end());
-        word.erase(std::remove(word.begin(), word.end(), ')'), word.end());
+        remove_puncuation(word);
       }
       words.emplace(std::move(word));
     }
