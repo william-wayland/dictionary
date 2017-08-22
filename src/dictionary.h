@@ -17,7 +17,7 @@ public:
     const std::string& path_to_file,
     Punctuation punct = Punctuation::CompleteRemoval);
 
-	void add_file(
+	bool add_file(
     const std::string& path,
     Punctuation punct = Punctuation::CompleteRemoval);
 

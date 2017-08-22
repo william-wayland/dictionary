@@ -27,7 +27,7 @@ bool Dictionary::contains(const std::string& word)
 }
 
 //! Reads a file from the path, and adds each word found into the container.
-void Dictionary::add_file(
+bool Dictionary::add_file(
   const std::string& path,
   Punctuation punct)
 {
@@ -35,8 +35,7 @@ void Dictionary::add_file(
   file.open(path);
   if (!file.is_open())
   {
-    std::cerr << "Couldn't Read File At:" << path << std::endl;
-    std::exit(-1);
+    return false;
   }
 
   //! Search through the file for words.
@@ -49,8 +48,8 @@ void Dictionary::add_file(
     }
     words.emplace(std::move(word));
   }
-
   has_read_a_file = true;
+  return true;
 }
 
 //! Returns a unmutable reference to the dictionary's container -- safe
