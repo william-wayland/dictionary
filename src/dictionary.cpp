@@ -40,22 +40,16 @@ void Dictionary::add_file(
   }
 
   //! Search through the file for words.
-  while (true)
+  auto word = std::string();
+  while (file >> word)
   {
-    auto word = std::string();
-    if (file >> word)
+    if (punct == Punctuation::CompleteRemoval)
     {
-      if (punct == Punctuation::CompleteRemoval)
-      {
-        remove_puncuation(word);
-      }
-      words.emplace(std::move(word));
+      remove_puncuation(word);
     }
-    else
-    {
-      break;
-    }
+    words.emplace(std::move(word));
   }
+
   has_read_a_file = true;
 }
 
