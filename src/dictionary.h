@@ -27,10 +27,10 @@ public:
 private:
 	void remove_puncuation(std::string& s)
 	{
-		s = std::regex_replace(s, complete, "");
+		s = std::regex_replace(s, alpha, "");
 	}
 
 	std::unordered_set<std::string> words;
 	bool has_read_a_file;
-	std::regex complete;
+	std::regex alpha;
 };

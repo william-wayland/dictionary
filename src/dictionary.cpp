@@ -2,14 +2,14 @@
 
 Dictionary::Dictionary():
   has_read_a_file(false),
-  complete("[^A-Za-z]")
+  alpha("[^A-Za-z]")
 {
 }
 
 Dictionary::Dictionary(
   const std::string& path_to_file,
   Punctuation punct):
-  complete("[^A-Za-z]")
+  alpha("[^A-Za-z]")
 {
   add_file(path_to_file, punct);
 }
