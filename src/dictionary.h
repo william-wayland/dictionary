@@ -22,7 +22,7 @@ public:
     Punctuation punct = Punctuation::CompleteRemoval);
 
 	bool contains(const std::string& word);
-	const std::unordered_set<std::string>& get_container_ref();
+	const std::unordered_set<std::string>& inner_immutable_ref() const;
 
 private:
 	void remove_puncuation(std::string& s)
