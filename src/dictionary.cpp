@@ -21,7 +21,7 @@ bool Dictionary::contains(const std::string& word)
   {
     return words.count(word) > 0;
   }
-  std::cerr << "I havn't loaded any words into the dictionary." << '\n';
+  std::cerr << "I haven't loaded any words into the dictionary." << '\n';
   std::cerr << "Use \"Dictionary::add_a_file(path)\"." << '\n';
   return false;
 }
