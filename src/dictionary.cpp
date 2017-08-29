@@ -1,29 +1,36 @@
 #include "dictionary.h"
 
 Dictionary::Dictionary():
-  has_read_a_file(false),
-  alpha("[^A-Za-z]")
+  has_read_a_file(false)
 {
 }
 
 Dictionary::Dictionary(
   const std::string& path_to_file,
-  Punctuation punct):
-  alpha("[^A-Za-z]")
+  Punctuation punct)
 {
   add_file(path_to_file, punct);
 }
 
 //! Searchs the container for a word
-bool Dictionary::contains(const std::string& word)
+bool Dictionary::contains(const std::string& word) const
 {
-  if (has_read_a_file)
+  if (!has_read_a_file)
   {
-    return words.count(word) > 0;
+    std::cerr << "I haven't loaded any words into the dictionary." << '\n';
+    std::cerr << "Use \"Dictionary::add_a_file(path)\"." << '\n';
+    return false;
   }
-  std::cerr << "I haven't loaded any words into the dictionary." << '\n';
-  std::cerr << "Use \"Dictionary::add_a_file(path)\"." << '\n';
-  return false;
+
+  if (words.count(word) > 0)
+  {
+    return true;
+  }
+
+  //! try searching my lowering the case - requires a copy
+  auto copy = word;
+  util::lower_first_char(copy);
+  return words.count(copy) > 0;
 }
 
 //! Reads a file from the path, and adds each word found into the container.
@@ -44,7 +51,7 @@ bool Dictionary::add_file(
   {
     if (punct == Punctuation::CompleteRemoval)
     {
-      remove_puncuation(word);
+      util::remove_puncuation(word);
     }
     words.emplace(std::move(word));
   }

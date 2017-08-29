@@ -1,12 +1,12 @@
-all: clean dict
+all: clean spch
 
 pre:
 	-mkdir bin
 	-mkdir obj
 
-dict: dictionary.o timer.o dict.o
-	g++ obj/main.o obj/timer.o obj/dictionary.o -o bin/dict
-dict.o:
+spch: dictionary.o timer.o spch.o
+	g++ obj/main.o obj/timer.o obj/dictionary.o -o bin/spch
+spch.o:
 	g++ -Wall -Wextra -std=c++17 -c src/main.cpp -o obj/main.o
 
 timer.o:

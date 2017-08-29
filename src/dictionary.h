@@ -1,8 +1,11 @@
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <unordered_set>
 #include <algorithm>
 #include <regex>
+
+#include "utility.h"
 
 enum class Punctuation{
 	Keep,
@@ -21,16 +24,12 @@ public:
     const std::string& path,
     Punctuation punct = Punctuation::CompleteRemoval);
 
-	bool contains(const std::string& word);
+	bool contains(const std::string& word) const;
 	const std::unordered_set<std::string>& inner_immutable_ref() const;
 
 private:
-	void remove_puncuation(std::string& s)
-	{
-		s = std::regex_replace(s, alpha, "");
-	}
 
 	std::unordered_set<std::string> words;
 	bool has_read_a_file;
-	std::regex alpha;
+
 };

@@ -1,0 +1,13 @@
+This is a test file.
+
+Empty line.
+
+Terminate.
+
+Eject
+
+SHOULDFAILLINE9
+
+This shouldn't fail.
+
+End.
