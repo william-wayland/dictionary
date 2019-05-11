@@ -1,8 +1,8 @@
-all: clean spch
+all: clean pre spch
 
 pre:
-	-mkdir bin
-	-mkdir obj
+	mkdir -p bin;
+	mkdir -p obj;
 
 spch: dictionary.o timer.o spch.o
 	g++ obj/main.o obj/timer.o obj/dictionary.o -o bin/spch
